@@ -1,11 +1,11 @@
+
 const canvas = document.getElementById("canvas");
 const canvasMulti = document.getElementById("canvasMulti");
 
 let ctx = canvas.getContext("2d");
 let ctxMulti = canvasMulti.getContext("2d");
 
-let xText = document.getElementById("xText");
-let yText = document.getElementById("yText");
+
 
 const window_height = "300";
 
@@ -117,16 +117,12 @@ class Circle {
 
     this.posY += this.dy;
 
-    xText.innerHTML= "X :" +this.posX.toFixed(2);
-    yText.innerHTML = "Y :"+this.posY.toFixed(2);;
-
-
   }
 
 }
 
 
-let randomRadius = Math.floor(Math.random() * 60 + 20);
+/* let randomRadius = Math.floor(Math.random() * 60 + 20);
 
 let randomX = Math.random() * window_width;
 
@@ -142,9 +138,7 @@ randomX = randomX < randomRadius ? randomRadius : randomX > window_width - rando
 randomY = randomY < randomRadius ? randomRadius : randomY > window_height - randomRadius ? window_height - randomRadius : randomY;
 
 
-let miCirculo = new Circle(randomX, randomY, randomRadius, randomStrokecolor, "1", randomBackcolor, 0.1);
-
-
+let miCirculo = new Circle(randomX, randomY, randomRadius, randomStrokecolor, "1", randomBackcolor, 2);
 
 miCirculo.draw(ctx);
 
@@ -157,13 +151,11 @@ let updateCircle = function () {
 
   miCirculo.update(ctx);
 
-
-
 };
 
 
-updateCircle(); 
- 
+updateCircle(); */
+
 
  const nCircles = 10;
 
@@ -179,27 +171,26 @@ for (let i = 0; i < nCircles; i++) {
 
   let randomY = Math.random() * window_height;
 
-  let randomBackcolor = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 1 + ")";
+  let randomBackcolor = "rgb(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + ")";
 
-  let randomStrokecolor = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 1 + ")";
+  let randomStrokecolor = "rgb(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + ")";
 
- let randomSpeed = Math.random() * 10 + 1; 
 
   randomX = randomX < randomRadius ? randomRadius : randomX > window_width - randomRadius ? window_width - randomRadius : randomX;
 
   randomY = randomY < randomRadius ? randomRadius : randomY > window_height - randomRadius ? window_height - randomRadius : randomY;
 
 
-  let miCirculoMulti = new Circle(randomX, randomY, randomRadius, randomStrokecolor, i+1, randomBackcolor, randomSpeed);
+  let miCirculo = new Circle(randomX, randomY, randomRadius, randomStrokecolor, i+1, randomBackcolor, 2);
 
-  circles.push(miCirculoMulti);
+  circles.push(miCirculo);
 
 }
 
 
-let updateCircleMulti = function () {
+let updateCircle = function () {
 
-  requestAnimationFrame(updateCircleMulti);
+  requestAnimationFrame(updateCircle);
 
   ctxMulti.clearRect(0, 0, window_width, window_height);
 
@@ -211,7 +202,7 @@ let updateCircleMulti = function () {
 
 };
 
-updateCircleMulti(); 
+updateCircle();
 
 
  
