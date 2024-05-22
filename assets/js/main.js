@@ -1,5 +1,7 @@
 const canvas = document.getElementById("canvas");
 const canvasMulti = document.getElementById("canvasMulti");
+const tabla = document.getElementById("tabla");
+const coordenadas = document.getElementById("coord__details");
 
 let ctx = canvas.getContext("2d");
 let ctxMulti = canvasMulti.getContext("2d");
@@ -7,9 +9,9 @@ let ctxMulti = canvasMulti.getContext("2d");
 let xText = document.getElementById("xText");
 let yText = document.getElementById("yText");
 
-const window_height = "300";
+const window_height = "200";
 
-const window_width = "500";
+const window_width = "300";
 
 
 canvas.height = window_height;
@@ -90,7 +92,7 @@ class Circle {
   }
 
 
-  update(context) {
+  update(context, isMulti) {
 
     this.draw(context);
 
@@ -117,16 +119,25 @@ class Circle {
 
     this.posY += this.dy;
 
-    xText.innerHTML= "X :" +this.posX.toFixed(2);
-    yText.innerHTML = "Y :"+this.posY.toFixed(2);;
+    if (isMulti == false) {
+      context.font = "16px Arial";
+      context.fillStyle = "black";
+      context.fillText('X: ' + this.posX.toFixed(2), 40, 20);
+      context.fillText('Y: ' + this.posY.toFixed(2), 40, 40);
+    } else {
 
+      let row = document.getElementById(`circle-${this.text}`);
+      row.cells[1].innerText = this.posX.toFixed(2);
+      row.cells[2].innerText = this.posY.toFixed(2);
+
+    }
 
   }
 
 }
 
 
-let randomRadius = Math.floor(Math.random() * 60 + 20);
+let randomRadius = Math.floor(Math.random() * 30 + 20);
 
 let randomX = Math.random() * window_width;
 
@@ -142,7 +153,7 @@ randomX = randomX < randomRadius ? randomRadius : randomX > window_width - rando
 randomY = randomY < randomRadius ? randomRadius : randomY > window_height - randomRadius ? window_height - randomRadius : randomY;
 
 
-let miCirculo = new Circle(randomX, randomY, randomRadius, randomStrokecolor, "1", randomBackcolor, 0.1);
+let miCirculo = new Circle(randomX, randomY, randomRadius, randomStrokecolor, "1", randomBackcolor, 3);
 
 
 
@@ -155,25 +166,26 @@ let updateCircle = function () {
 
   ctx.clearRect(0, 0, window_width, window_height);
 
-  miCirculo.update(ctx);
+  miCirculo.update(ctx, false);
 
 
 
 };
 
 
-updateCircle(); 
- 
+updateCircle();
 
- const nCircles = 10;
+
+const nCircles = 10;
 
 
 let circles = [];
+coordenadas.innerHTML = '';
 
 
 for (let i = 0; i < nCircles; i++) {
 
-  let randomRadius = Math.floor(Math.random() * 30 + 20);
+  let randomRadius = Math.floor(Math.random() * 15 + 20);
 
   let randomX = Math.random() * window_width;
 
@@ -183,17 +195,25 @@ for (let i = 0; i < nCircles; i++) {
 
   let randomStrokecolor = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 1 + ")";
 
- let randomSpeed = Math.random() * 10 + 1; 
+  let randomSpeed = Math.random() * 10 + 1;
 
   randomX = randomX < randomRadius ? randomRadius : randomX > window_width - randomRadius ? window_width - randomRadius : randomX;
 
   randomY = randomY < randomRadius ? randomRadius : randomY > window_height - randomRadius ? window_height - randomRadius : randomY;
 
 
-  let miCirculoMulti = new Circle(randomX, randomY, randomRadius, randomStrokecolor, i+1, randomBackcolor, randomSpeed);
+  let miCirculoMulti = new Circle(randomX, randomY, randomRadius, randomStrokecolor, i + 1, randomBackcolor, randomSpeed);
 
   circles.push(miCirculoMulti);
 
+  let newRow = document.createElement('tr');
+        newRow.setAttribute('id', `circle-${i + 1}`);
+        newRow.innerHTML = `
+            <td>${i + 1}</td>
+            <td>${Math.floor(randomX)}</td>
+            <td>${Math.floor(randomY)}</td>
+        `;
+        coordenadas.appendChild(newRow);
 }
 
 
@@ -205,13 +225,12 @@ let updateCircleMulti = function () {
 
   circles.forEach((circle) => {
 
-    circle.update(ctxMulti);
+    circle.update(ctxMulti, true);
 
   });
 
 };
 
-updateCircleMulti(); 
+updateCircleMulti();
 
 
- 
