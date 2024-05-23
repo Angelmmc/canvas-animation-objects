@@ -1,7 +1,6 @@
 const canvas = document.getElementById("canvas");
 const canvasMulti = document.getElementById("canvasMulti");
-const tabla = document.getElementById("tabla");
-const coordenadas = document.getElementById("coord__details");
+const coordenadas = document.getElementById("tableContent");
 
 let ctx = canvas.getContext("2d");
 let ctxMulti = canvasMulti.getContext("2d");
@@ -10,21 +9,15 @@ let xText = document.getElementById("xText");
 let yText = document.getElementById("yText");
 
 const window_height = "200";
-
 const window_width = "300";
 
-
 canvas.height = window_height;
-
 canvas.width = window_width;
-
 canvasMulti.height = window_height;
-
 canvasMulti.width = window_width;
 
-
-canvas.style.backgroundColor = "#b7f7ed";
-
+canvas.style.backgroundColor = "#ffca02";
+canvasMulti.style.backgroundColor = "#ff6994";
 
 class Circle {
 
@@ -42,9 +35,7 @@ class Circle {
 
     this.backcolor = backcolor;
 
-
     this.speed = speed;
-
 
     this.dx = 1 * this.speed;
 
@@ -64,7 +55,6 @@ class Circle {
 
     context.fill();
 
-
     //Dibuja la línea del objeto
 
     context.lineWidth = 5;
@@ -72,7 +62,6 @@ class Circle {
     context.strokeStyle = this.color;
 
     context.stroke();
-
 
     //Dibuja el texto al centro del objeto
 
@@ -86,7 +75,6 @@ class Circle {
 
     context.fillText(this.text, this.posX, this.posY);
 
-
     context.closePath();
 
   }
@@ -96,7 +84,6 @@ class Circle {
 
     this.draw(context);
 
-
     //Si el circulo supera el margen derecho entonces se mueve a la izquierda
 
     if (this.posX + this.radius > window_width || this.posX - this.radius < 0) {
@@ -105,7 +92,6 @@ class Circle {
 
     }
 
-
     //Si el circulo supera el margen superior entonces se mueve a abajo
 
     if (this.posY + this.radius > window_height || this.posY - this.radius < 0) {
@@ -113,7 +99,6 @@ class Circle {
       this.dy = -this.dy;
 
     }
-
 
     this.posX += this.dx;
 
@@ -125,17 +110,14 @@ class Circle {
       context.fillText('X: ' + this.posX.toFixed(2), 40, 20);
       context.fillText('Y: ' + this.posY.toFixed(2), 40, 40);
     } else {
-
       let row = document.getElementById(`circle-${this.text}`);
       row.cells[1].innerText = this.posX.toFixed(2);
       row.cells[2].innerText = this.posY.toFixed(2);
-
     }
 
   }
 
 }
-
 
 let randomRadius = Math.floor(Math.random() * 30 + 20);
 
@@ -152,13 +134,9 @@ randomX = randomX < randomRadius ? randomRadius : randomX > window_width - rando
 
 randomY = randomY < randomRadius ? randomRadius : randomY > window_height - randomRadius ? window_height - randomRadius : randomY;
 
-
 let miCirculo = new Circle(randomX, randomY, randomRadius, randomStrokecolor, "1", randomBackcolor, 3);
 
-
-
 miCirculo.draw(ctx);
-
 
 let updateCircle = function () {
 
@@ -168,20 +146,15 @@ let updateCircle = function () {
 
   miCirculo.update(ctx, false);
 
-
-
 };
 
 
 updateCircle();
 
-
-const nCircles = 10;
-
+const nCircles = 4;
 
 let circles = [];
 coordenadas.innerHTML = '';
-
 
 for (let i = 0; i < nCircles; i++) {
 
@@ -207,13 +180,13 @@ for (let i = 0; i < nCircles; i++) {
   circles.push(miCirculoMulti);
 
   let newRow = document.createElement('tr');
-        newRow.setAttribute('id', `circle-${i + 1}`);
-        newRow.innerHTML = `
+  newRow.setAttribute('id', `circle-${i + 1}`);
+  newRow.innerHTML = `
             <td>${i + 1}</td>
             <td>${Math.floor(randomX)}</td>
             <td>${Math.floor(randomY)}</td>
         `;
-        coordenadas.appendChild(newRow);
+  coordenadas.appendChild(newRow);
 }
 
 
