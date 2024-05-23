@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
 const canvasMulti = document.getElementById("canvasMulti");
-const coordenadas = document.getElementById("tableContent");
+const tableContent = document.getElementById("tableContent");
 
 let ctx = canvas.getContext("2d");
 let ctxMulti = canvasMulti.getContext("2d");
@@ -154,7 +154,7 @@ updateCircle();
 const nCircles = 4;
 
 let circles = [];
-coordenadas.innerHTML = '';
+tableContent.innerHTML = '';
 
 for (let i = 0; i < nCircles; i++) {
 
@@ -186,7 +186,7 @@ for (let i = 0; i < nCircles; i++) {
             <td>${Math.floor(randomX)}</td>
             <td>${Math.floor(randomY)}</td>
         `;
-  coordenadas.appendChild(newRow);
+  tableContent.appendChild(newRow);
 }
 
 
